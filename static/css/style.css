@@ -1,0 +1,48 @@
+:root {
+  --bg: #eef8fd;
+  --blob-a: #8fd3f4;
+  --blob-b: #a8ece4;
+  --blob-c: #cfeaff;
+  --accent: #1f93cc;
+  --accent-dark: #16739e;
+}
+* { box-sizing: border-box; margin: 0; }
+html, body { height: 100%; background: var(--bg);
+  font-family: "Segoe UI", system-ui, sans-serif; overflow: hidden; }
+
+.page { position: fixed; inset: 0; transition: opacity .6s ease, visibility .6s; }
+.page.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+
+.blob {
+  position: absolute; border-radius: 50%; filter: blur(80px);
+  opacity: 0; transform: scale(0);
+  animation: bloom 2.4s cubic-bezier(.2,.8,.2,1) forwards,
+             float 14s ease-in-out 2.4s infinite alternate;
+}
+.blob.a { width: 55vmax; height: 55vmax; background: var(--blob-a); top: -15vmax; left: -10vmax; }
+.blob.b { width: 45vmax; height: 45vmax; background: var(--blob-b); bottom: -15vmax; right: -8vmax; animation-delay: .3s, 2.7s; }
+.blob.c { width: 30vmax; height: 30vmax; background: var(--blob-c); top: 40%; left: 55%; animation-delay: .6s, 3s; }
+@keyframes bloom { to { opacity: .7; transform: scale(1); } }
+@keyframes float { from { translate: 0 0; } to { translate: 6vmax -4vmax; } }
+
+#particles { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+.hero { position: relative; z-index: 2; height: 100%; display: grid; place-content: center; }
+#welcomeBtn {
+  font: inherit; font-size: clamp(1.2rem, 3vw, 1.8rem); font-weight: 600;
+  padding: .9em 2.6em; border: 0; border-radius: 999px; cursor: pointer;
+  color: #fff; background: var(--accent);
+  box-shadow: 0 10px 30px rgba(31,147,204,.35);
+  opacity: 0; animation: rise 1.2s ease 1.8s forwards;
+  transition: background .2s, transform .2s, box-shadow .2s;
+}
+#welcomeBtn:hover { background: var(--accent-dark); transform: translateY(-2px); box-shadow: 0 14px 34px rgba(31,147,204,.45); }
+#welcomeBtn:focus-visible { outline: 3px solid #fff; outline-offset: 3px; box-shadow: 0 0 0 6px var(--accent); }
+@keyframes rise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+
+#page2 { background: var(--bg); }
+
+@media (prefers-reduced-motion: reduce) {
+  .blob, #welcomeBtn { animation-duration: .01s; animation-delay: 0s; }
+  .page { transition: none; }
+}
