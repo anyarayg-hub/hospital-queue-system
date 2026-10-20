@@ -1,4 +1,3 @@
-/* ---------- Page navigation ---------- */
 const page1 = document.getElementById("page1");
 const page2 = document.getElementById("page2");
 const welcomeBtn = document.getElementById("welcomeBtn");
@@ -7,21 +6,18 @@ let animating = false;
 function showPage(n) {
   page1.classList.toggle("hidden", n !== 1);
   page2.classList.toggle("hidden", n !== 2);
-  const shouldAnimate = (n === 1);       // pause particles on page 2
+  const shouldAnimate = (n === 1);
   if (shouldAnimate && !animating) { animating = true; requestAnimationFrame(frame); }
   if (!shouldAnimate) animating = false;
 }
 
-// Click: show page 2 right away, then update the URL hash so Back works
 welcomeBtn.addEventListener("click", () => {
   showPage(2);
   location.hash = "page2";
 });
 
-// Back/forward buttons
 addEventListener("hashchange", () => showPage(location.hash === "#page2" ? 2 : 1));
 
-/* ---------- Particle background ---------- */
 const canvas = document.getElementById("particles");
 const ctx = canvas.getContext("2d");
 const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
